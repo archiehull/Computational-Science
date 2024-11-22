@@ -21,7 +21,7 @@ pos_Y=0
 X_vals=[]
 Y_vals=[]
 
-for i in range(100):
+for i in range(10000):
     diag = round(numpy.random.uniform(0,1))
 
     X = round(numpy.random.uniform(0,1))

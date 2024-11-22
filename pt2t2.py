@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 k = 0.006  # Growth rate
 M = 10**13  # Carrying capacity
 N0 = 10**9  # Initial tumor cell population
-h = 0.01  # Step size
+h = 0.1  # Step size
 t_max = 1200  # Maximum time
 time = np.arange(0, t_max, h)  # Time array
 
@@ -15,11 +15,13 @@ def gompertz_growth(N, k, M):
 
 def simulate_growth(N0, M, k, h, max_time=1200):
     time = 0
-    N = N0
-    while abs(M - N) / M > 1:  # Relative error condition
-        dN = h * gompertz_growth(N, k, M)
-        N += dN
+    N = [N0]
+
+    while N[-1] < M * 0.99:  # Relative error condition
+        dN = h * gompertz_growth(N[-1], k, M)
+        N.append(N[-1]+dN)
         time += h
+
         if time > max_time:  # Safeguard against infinite loops
             print("Warning: Reached maximum simulation time without convergence.")
             break
@@ -52,18 +54,23 @@ current_pos=0,0
 XY_vals=[]
 
 spread=0
-cell_no=1000
+cell_no=10
 
-while spread < cell_no:
-    
+directional_moves=[[0,1],[0,-1],[1,0],[-1,0],[1,-1],[-1,1],[1,1],[-1,-1]]
+
+for i in range(1200):    
     steady_time = simulate_growth(N0, M, k, h)
 
+    print(i)
     while(True):
 
         diag = round(np.random.uniform(0,1))
 
         X = round(np.random.uniform(0,1))
         Y = round(np.random.uniform(0,1))
+
+        old_x = pos_X
+        old_y = pos_Y
 
         if diag == 1:
             if X==1 and Y==1:
@@ -101,13 +108,13 @@ while spread < cell_no:
 
         if current_pos not in XY_vals:
             break    
-        print("cell occupied")
+
+        #if current_pos is in 
+        #print("cell occupied")
 
     X_vals.append(pos_X)
     Y_vals.append(pos_Y)
     XY_vals.append(current_pos)
-
-    spread+=1
 
 
 

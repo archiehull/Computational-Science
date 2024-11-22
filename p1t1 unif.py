@@ -14,7 +14,7 @@ pos_Y=0
 X_vals=[]
 Y_vals=[]
 
-for i in range(100):
+for i in range(10000):
     X = round(numpy.random.uniform(0,1))
     Y = round(numpy.random.uniform(0,1))
     if X==1 and Y==1:

@@ -20,6 +20,7 @@ N[0] = N0
 # Simulate growth using Euler's method
 for i in range(1, len(time)):
     N[i] = N[i - 1] + h * gompertz_growth(N[i - 1], time[i - 1], k, M)
+    #print(abs(N[i] - M))
     if abs(N[i] - M) < 1:  # Steady-state check
         break
 
