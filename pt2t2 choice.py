@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import random
 
 # Parameters
 k = 0.006  # Growth rate
@@ -29,23 +30,8 @@ def simulate_growth(N0, M, k, h, max_time=1200):
 
 
 # Movement
-up=0
-down=0
-left=0
-right=0
-
-up_right=0
-up_left=0
-down_right=0
-down_left=0
-
-diag=None
-diag_tot=0
-
-X=None
-Y=None
-pos_X=0
-pos_Y=0
+new_X = pos_X=0
+new_Y = pos_Y=0
 X_vals=[]
 Y_vals=[]
 
@@ -56,7 +42,7 @@ no_moves=False
 
 XY_vals=[]
 
-directional_moves=[[0,1],[0,-1],[1,0],[-1,0],[1,-1],[-1,1],[1,1],[-1,-1]]
+directional_moves=[(0,1),(0,-1),(1,0),(-1,0),(1,-1),(-1,1),(1,1),(-1,-1)]
 
 for i in range(t_max):    
     steady_time = simulate_growth(N0, M, k, h)
@@ -64,48 +50,18 @@ for i in range(t_max):
     print(i)
     while(True):
 
-        diag = round(np.random.uniform(0,1))
-
-        X = round(np.random.uniform(0,1))
-        Y = round(np.random.uniform(0,1))
-
         current_pos=pos_X,pos_Y
 
-        if diag == 1:
-            if X==1 and Y==1:
-                up_right+=1
-                pos_X+=1
-                pos_Y+=1
-            elif X==1 and Y==0:
-                down_right+=1
-                pos_X+=1
-                pos_Y-=1
-            elif X==0 and Y==1:
-                up_left+=1
-                pos_X-=1
-                pos_Y+=1
-            elif X==0 and Y==0:
-                down_left+=1
-                pos_X-=1
-                pos_Y-=1
-            diag_tot+=1
-        else:
-            if X==1 and Y==1:
-                up+=1
-                pos_Y+=1
-            elif X==1 and Y==0:
-                down+=1
-                pos_Y-=1
-            elif X==0 and Y==1:
-                left+=1
-                pos_X-=1
-            elif X==0 and Y==0:
-                right+=1
-                pos_X+=1
-        
-        new_pos=pos_X,pos_Y
+        new_move = random.choice(directional_moves)
+
+        new_X= pos_X+new_move[0]
+        new_Y= pos_Y+new_move[1]
+
+        new_pos = new_X, new_Y
 
         if new_pos not in XY_vals:
+            pos_X = new_X
+            pos_Y = new_Y
             current_pos = new_pos
             break    
 
@@ -120,8 +76,6 @@ for i in range(t_max):
         for poss in possible_moves:
             if poss not in XY_vals:
                 new_moves+=1
-            if new_moves<0:
-                break
             
         if new_moves==0:
             print("All adjacent cells are occupied. Stopping simulation")
