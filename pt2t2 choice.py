@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import random
 
+
 # Parameters
 k = 0.006  # Growth rate
 M = 10**13  # Carrying capacity
@@ -47,7 +48,7 @@ directional_moves=[(0,1),(0,-1),(1,0),(-1,0),(1,-1),(-1,1),(1,1),(-1,-1)]
 for i in range(t_max):    
     steady_time = simulate_growth(N0, M, k, h)
 
-    print(i)
+    # print(i)
     while(True):
 
         current_pos=pos_X,pos_Y
@@ -78,6 +79,7 @@ for i in range(t_max):
                 new_moves+=1
             
         if new_moves==0:
+            print(i)
             print("All adjacent cells are occupied. Stopping simulation")
             no_moves=True
             break
